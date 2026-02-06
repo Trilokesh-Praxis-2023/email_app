@@ -240,8 +240,13 @@ def send_email(cfg, to_email, subject, body):
         attach_resume(msg)
 
         context = ssl.create_default_context()
+        context.set_ciphers('DEFAULT@SECLEVEL=1')   # ⭐ critical fix
 
-        with smtplib.SMTP_SSL(cfg["smtp_server"], int(cfg["smtp_port"]), context=context) as server:
+        with smtplib.SMTP_SSL(
+            cfg["smtp_server"],
+            int(cfg["smtp_port"]),
+            context=context
+        ) as server:
             server.login(cfg["sender_email"], cfg["sender_password"])
             server.send_message(msg)
 
