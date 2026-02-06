@@ -236,9 +236,6 @@ Best regards,<br>
 
 def send_email(cfg, to_email, subject, body):
     try:
-        if not subject or subject.strip().lower() in ["", "(no subject)", "subject"]:
-            subject = "Application for Data Analyst Role"
-
         msg = MIMEMultipart()
         msg["From"] = f"{YOUR_NAME} <{cfg['sender_email']}>"
         msg["To"] = to_email
@@ -246,13 +243,17 @@ def send_email(cfg, to_email, subject, body):
         msg.attach(MIMEText(body, "html", "utf-8"))
         attach_resume(msg)
 
-        with smtplib.SMTP(cfg["smtp_server"], int(cfg["smtp_port"])) as server:
-            server.starttls(context=ssl.create_default_context())
-            server.login(cfg["sender_email"], cfg["sender_password"])
-            server.send_message(msg)
+        server = smtplib.SMTP(cfg["smtp_server"], int(cfg["smtp_port"]))
+        server.ehlo()
+        server.starttls(context=ssl.create_default_context())
+        server.ehlo()
+        server.login(cfg["sender_email"], cfg["sender_password"])
+        server.send_message(msg)
+        server.quit()
 
         print(f"[INFO] Sent successfully → {to_email}")
         return True
+
     except Exception as e:
         print(f"[ERROR] Failed to send email to {to_email}: {e}")
         return False
