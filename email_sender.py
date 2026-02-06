@@ -25,10 +25,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-YOUR_NAME = os.getenv("YOUR_NAME")
-YOUR_EMAIL = os.getenv("SENDER_EMAIL")
-YOUR_PHONE = os.getenv("YOUR_PHONE")
-
 
 # ---------------- USER DETAILS ---------------- #
 YOUR_NAME = "Trilokesh Ranjan Sarkar"
