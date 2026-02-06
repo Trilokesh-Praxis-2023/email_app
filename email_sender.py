@@ -243,13 +243,11 @@ def send_email(cfg, to_email, subject, body):
         msg.attach(MIMEText(body, "html", "utf-8"))
         attach_resume(msg)
 
-        server = smtplib.SMTP(cfg["smtp_server"], int(cfg["smtp_port"]))
-        server.ehlo()
-        server.starttls(context=ssl.create_default_context())
-        server.ehlo()
-        server.login(cfg["sender_email"], cfg["sender_password"])
-        server.send_message(msg)
-        server.quit()
+        context = ssl.create_default_context()
+
+        with smtplib.SMTP_SSL(cfg["smtp_server"], int(cfg["smtp_port"]), context=context) as server:
+            server.login(cfg["sender_email"], cfg["sender_password"])
+            server.send_message(msg)
 
         print(f"[INFO] Sent successfully → {to_email}")
         return True
