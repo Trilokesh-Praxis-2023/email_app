@@ -20,6 +20,15 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 from datetime import datetime, timedelta
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+YOUR_NAME = os.getenv("YOUR_NAME")
+YOUR_EMAIL = os.getenv("SENDER_EMAIL")
+YOUR_PHONE = os.getenv("YOUR_PHONE")
+
 
 # ---------------- USER DETAILS ---------------- #
 YOUR_NAME = "Trilokesh Ranjan Sarkar"
@@ -37,17 +46,15 @@ PATHS = {
 # ---------------- CORE HELPERS ---------------- #
 
 def load_config():
-    cfg = {}
-    p = Path(PATHS["config"])
-    if not p.exists():
-        print(f"[WARN] Config file missing: {p} (using defaults)")
-        return cfg
-    with p.open("r", encoding="utf-8") as f:
-        for line in f:
-            if "=" in line and not line.strip().startswith("#"):
-                k, v = line.strip().split("=", 1)
-                cfg[k.strip()] = v.strip()
-    return cfg
+    return {
+        "smtp_server": os.getenv("SMTP_SERVER"),
+        "smtp_port": os.getenv("SMTP_PORT", 587),
+        "sender_email": os.getenv("SENDER_EMAIL"),
+        "sender_password": os.getenv("SENDER_PASSWORD"),
+        "delay": os.getenv("DELAY", 15),
+        "send_today_only": os.getenv("SEND_TODAY_ONLY", "yes"),
+    }
+
 
 def load_history():
     p = Path(PATHS["history"])
