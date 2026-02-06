@@ -1,0 +1,72 @@
+/* ---------------- GLOBAL ---------------- */
+body {
+    background-color: #0e1117;
+    color: #e6edf3;
+    font-family: "Inter", system-ui, sans-serif;
+}
+
+/* ---------------- HEADERS ---------------- */
+.main-title {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.sub-text {
+    color: #8b949e;
+    margin-bottom: 22px;
+}
+
+/* ---------------- CARDS ---------------- */
+.card {
+    padding: 20px;
+    border-radius: 14px;
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    margin-bottom: 22px;
+}
+
+.metric-card {
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    text-align: center;
+    font-size: 15px;
+}
+
+/* ---------------- EMAIL CHIPS ---------------- */
+.email-chip {
+    display: inline-block;
+    padding: 6px 10px;
+    margin: 4px 6px 4px 0;
+    background: linear-gradient(135deg, #1f6feb, #388bfd);
+    border-radius: 999px;
+    font-size: 13px;
+    color: white;
+}
+
+/* ---------------- BUTTONS ---------------- */
+button[kind="primary"] {
+    background: linear-gradient(135deg, #238636, #2ea043) !important;
+    border-radius: 10px !important;
+    font-weight: 600;
+}
+
+/* ---------------- EXPANDERS ---------------- */
+details summary {
+    font-weight: 600;
+    color: #58a6ff;
+}
+
+/* ---------------- CODE BLOCK ---------------- */
+.stCodeBlock {
+    border-radius: 12px;
+    background-color: #0d1117 !important;
+}
+
+/* ---------------- SIDEBAR ---------------- */
+section[data-testid="stSidebar"] {
+    background-color: #0d1117;
+    border-right: 1px solid #30363d;
+}

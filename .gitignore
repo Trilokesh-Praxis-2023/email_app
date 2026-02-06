@@ -1,0 +1,5 @@
+.env
+email_config.txt
+credentials.txt
+linkedin_emails_jds.json
+email_sending_history.json
