@@ -124,38 +124,28 @@ Best regards,<br>
 # ---------------- EMAILJS SEND ---------------- #
 
 def send_email(to_email, subject, body):
-    try:
-        url = "https://api.emailjs.com/api/v1.0/email/send"
+    url = "https://api.emailjs.com/api/v1.0/email/send"
 
-        payload = {
-            "service_id": st.secrets["EMAILJS_SERVICE_ID"],
-            "template_id": st.secrets["EMAILJS_TEMPLATE_ID"],
-            "user_id": st.secrets["EMAILJS_PUBLIC_KEY"],
-            "template_params": {
-                "to_name": extract_name(to_email),
-                "from_name": YOUR_NAME,
-                "subject": subject,
-                "message": body,
-                "reply_to": YOUR_EMAIL,
-                "to_email": to_email   # ✅ CORRECT KEY
-            }
+    payload = {
+        "service_id": st.secrets["EMAILJS_SERVICE_ID"],
+        "template_id": st.secrets["EMAILJS_TEMPLATE_ID"],
+        "user_id": st.secrets["EMAILJS_PUBLIC_KEY"],
+        "template_params": {
+            "to_name": extract_name(to_email),
+            "from_name": YOUR_NAME,
+            "subject": subject,
+            "message": body,
+            "reply_to": YOUR_EMAIL,
+            "to_email": to_email
         }
+    }
 
-        r = requests.post(
-            url,
-            json=payload,
-            headers={"Content-Type": "application/json"}
-        )
+    r = requests.post(url, json=payload, headers={"Content-Type": "application/json"})
 
-        # 🔍 DEBUG (keep for now)
-        print("EMAILJS STATUS:", r.status_code)
-        print("EMAILJS RESPONSE:", r.text)
+    st.write("📨 EmailJS Status:", r.status_code)
+    st.write("📨 EmailJS Response:", r.text)
 
-        return r.status_code == 200
-
-    except Exception as e:
-        print("EMAILJS ERROR:", e)
-        return False
+    return r.status_code == 200
 
 
 # ---------------- MAIN PROCESS ---------------- #
