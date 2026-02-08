@@ -137,16 +137,24 @@ def send_email(to_email, subject, body):
                 "subject": subject,
                 "message": body,
                 "reply_to": YOUR_EMAIL,
-                "email": to_email
+                "to_email": to_email   # ✅ CORRECT KEY
             }
         }
 
-        r = requests.post(url, json=payload, headers={"Content-Type": "application/json"})
+        r = requests.post(
+            url,
+            json=payload,
+            headers={"Content-Type": "application/json"}
+        )
+
+        # 🔍 DEBUG (keep for now)
+        print("EMAILJS STATUS:", r.status_code)
+        print("EMAILJS RESPONSE:", r.text)
 
         return r.status_code == 200
 
     except Exception as e:
-        print(e)
+        print("EMAILJS ERROR:", e)
         return False
 
 
