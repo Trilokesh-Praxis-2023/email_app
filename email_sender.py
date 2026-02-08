@@ -89,40 +89,34 @@ def compose_email_subject(role, company):
     return f"Application for {role} at {company}"
 
 
-def compose_email_body(author, company, role, your_name, your_email, your_phone):
+def compose_email_body(author, company, role):
     return f"""
 <p>Dear <b>{author}</b>,</p>
 
 <p>
 I hope you are doing well. I am writing to express my interest in the <b>{role}</b> role at <b>{company}</b>. 
-I currently work as a <b>Data Analyst at Web Spiders</b> and hold a <b>PG Diploma in Data Science</b> from Praxis Business School.
+I currently work as a <b>Data Analyst</b> with strong experience in automation, dashboards, ETL pipelines, and AI analytics.
 </p>
 
 <p>
-💡 I specialize in <b>data analysis, dashboarding, automation pipelines</b>, and <b>end-to-end AI workflows</b>.  
-I work daily with <b>Python, SQL, Pandas</b>, and BI tools to deliver insights and support decision-making.
+💡 I specialize in <b>data analysis, dashboarding, automation pipelines</b>, and <b>end-to-end AI workflows</b>.
 </p>
 
 <p>
 📊 My recent work includes <b>ETL pipelines, data quality checks, Power BI dashboards, Selenium automation</b>, 
-and <b>Video AI analytics</b> for retail behavior insights. I enjoy building solutions that improve accuracy and efficiency.
+and <b>Video AI analytics</b>.
 </p>
 
 <p>
-📚 I have also published research on <b>adversarial robustness</b>, evaluating <b>FGSM</b> and <b>CW attacks</b> with defensive distillation 
-(<i>arXiv:2404.04245</i>).
-</p>
-
-<p>
-I would love the opportunity to contribute my <b>data analytics</b> and <b>automation</b> skills to <b>{company}</b>.  
-Please find my resume attached.
+You can view my resume here: 
+<a href="{get_resume_link()}">View Resume</a>
 </p>
 
 <p>
 Best regards,<br>
-<b>{your_name}</b><br>
-📧 <b>{your_email}</b><br>
-📱 <b>{your_phone}</b>
+<b>{YOUR_NAME}</b><br>
+📧 {YOUR_EMAIL}<br>
+📱 {YOUR_PHONE}
 </p>
 """
 
