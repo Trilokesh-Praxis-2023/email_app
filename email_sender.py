@@ -74,7 +74,7 @@ def extract_company(email):
     return domain.split(".")[0].capitalize()
 
 
-def is_email_sent_recently(hist, email, days=90):
+def is_email_sent_recently(hist, email, days=0):
     cutoff = datetime.now() - timedelta(days=days)
     for e in hist["sent_emails"]:
         dt = datetime.strptime(e["sent_date"], "%Y-%m-%d %H:%M:%S")
