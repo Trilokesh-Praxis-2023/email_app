@@ -4,3 +4,5 @@ credentials.txt
 linkedin_emails_jds.json
 email_sending_history.json
 email_js.txt
+backup.txt
+.gitignore
