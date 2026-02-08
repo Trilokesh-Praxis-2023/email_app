@@ -1,10 +1,9 @@
 import streamlit as st
 import re
-import json
-from datetime import datetime
 from pathlib import Path
-import subprocess
-import sys
+from datetime import datetime
+
+from email_sender import process_and_send
 
 st.set_page_config(page_title="JD → Email Sender", layout="wide")
 
@@ -21,20 +20,9 @@ def extract_emails(text):
     pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
     return list(set(re.findall(pattern, text)))
 
-def create_json(emails, jd):
-    data = []
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    for e in emails:
-        data.append({
-            "emails": [e],
-            "job_description": jd,
-            "extraction_date": now
-        })
-    Path("linkedin_emails_jds.json").write_text(json.dumps(data, indent=2))
-
 # ---------- UI ----------
 st.markdown('<div class="main-title">📧 JD → Smart Email Sender</div>', unsafe_allow_html=True)
-st.markdown('<div class="sub-text">Paste JD and auto send resume emails.</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-text">Paste JD and automatically send resume emails.</div>', unsafe_allow_html=True)
 
 jd = st.text_area("Paste Job Description", height=250)
 
@@ -48,25 +36,21 @@ if jd:
     chips = "".join([f'<span class="email-chip">{e}</span>' for e in emails])
     st.markdown(chips, unsafe_allow_html=True)
 
+# ---------- SEND BUTTON ----------
 if st.button("🚀 Extract Emails & Send", use_container_width=True):
     emails = extract_emails(jd)
+
     if not emails:
-        st.error("No emails found")
+        st.error("No emails found in JD")
         st.stop()
 
-    create_json(emails, jd)
+    entries = [{
+        "emails": emails,
+        "job_description": jd,
+        "extraction_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }]
 
-    st.success("Sending started...")
+    with st.spinner("Sending emails..."):
+        sent = process_and_send(entries)
 
-    process = subprocess.Popen(
-        [sys.executable, "email_sender.py"],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        text=True
-    )
-
-    logs = ""
-    with st.expander("Live Logs"):
-        for line in process.stdout:
-            logs += line
-            st.code(logs)
+    st.success(f"✅ {sent} emails sent successfully!")
